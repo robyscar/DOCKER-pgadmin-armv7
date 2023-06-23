@@ -1,0 +1,29 @@
+
+version: '3'
+
+services:
+
+  db:
+    image: "postgres:9.6.24"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "pg123456"
+      POSTGRES_USER: "pg_user"
+      POSTGRES_DB: "pg"
+    networks:
+     - "postgres"
+  
+  pgadmin:
+    #build: https://github.com/postgres/pgadmin4.git#REL-6_4
+    image: hunnguye/pgadmin4-armv7:6.3
+    restart: always
+    container_name: "pgadmin"
+    ports:
+      - "9090:5050"
+    environment:
+      PGADMIN_SETUP_EMAIL: test@example.com
+      PGADMIN_SETUP_PASSWORD: 123456
+    networks:
+     - "postgres"
