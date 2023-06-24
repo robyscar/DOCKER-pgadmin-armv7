@@ -43,6 +43,10 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 ### url: https://pgadmin-archive.postgresql.org/pgadmin4/v.3/pip/pgadmin4-7.3-py3-none-any.whl 
 ### for URL https://pgadmin-archive.postgresql.org/pgadmin4/v.3/pip/pgadmin4-7.3-py3-none-any.whl
 
+###     https://pypi.org/project/pgadmin4/
+### pip install pgadmin4
+###         or
+### pip install https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v7.3/pip/pgadmin4-7.3-py3-none-any.whl
 
 RUN apk add --no-cache alpine-sdk linux-headers \
  && pip install --upgrade pip \
@@ -58,6 +62,8 @@ EXPOSE 5050
 #   COPY config_distro.py /usr/local/lib/python3.10/site-packages/pgadmin4/
 COPY config_distro.py /usr/local/lib/python3.11/site-packages/pgadmin4/
 
+###     nano /usr/local/lib/python3.11/site-packages/pgadmin4/config_distro.py
+
 USER pgadmin:pgadmin
 
 ### /usr/local/lib/python3.11/site-packages/pgadmin4/pgAdmin4.py
@@ -66,3 +72,8 @@ USER pgadmin:pgadmin
 CMD ["python", "./usr/local/lib/python3.11/site-packages/pgadmin4/pgAdmin4.py"]
 
 VOLUME /pgadmin/
+
+
+
+
+### docker run --hostname=75665d08bebd --mac-address=02:42:ac:11:00:02 --env=PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --env=LANG=C.UTF-8 --env=GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D --env=PYTHON_VERSION=3.11.4 --env=PYTHON_PIP_VERSION=23.1.2 --env=PYTHON_SETUPTOOLS_VERSION=65.5.1 --env=PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py --env=PYTHON_GET_PIP_SHA256=96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207 --restart=no --runtime=runc -t -d python:3.11.4-alpine3.18
