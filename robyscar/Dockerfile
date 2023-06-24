@@ -1,4 +1,9 @@
-FROM python:3.10-alpine
+#   20260624 update
+#   ITs$B v.1.00
+#
+
+#   FROM python:3.10-alpine
+FROM python:3.11.4-alpine3.18
 
 # create a non-privileged user to use at runtime
 RUN addgroup -g 50 -S pgadmin \
@@ -15,7 +20,9 @@ RUN apk add --no-cache libedit postgresql \
 
 RUN apk add --no-cache postgresql-dev libffi-dev zlib-dev jpeg-dev
 
-ENV PGADMIN_VERSION=7.0
+#   ENV PGADMIN_VERSION=7.0
+ENV PGADMIN_VERSION=7.3
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
@@ -28,8 +35,12 @@ RUN apk add --no-cache alpine-sdk linux-headers \
 
 EXPOSE 5050
 
-COPY config_distro.py /usr/local/lib/python3.10/site-packages/pgadmin4/
+#   COPY config_distro.py /usr/local/lib/python3.10/site-packages/pgadmin4/
+COPY config_distro.py /usr/local/lib/python3.11/site-packages/pgadmin4/
 
 USER pgadmin:pgadmin
-CMD ["python", "./usr/local/lib/python3.10/site-packages/pgadmin4/pgAdmin4.py"]
+
+#   CMD ["python", "./usr/local/lib/python3.10/site-packages/pgadmin4/pgAdmin4.py"]
+CMD ["python", "./usr/local/lib/python3.11/site-packages/pgadmin4/pgAdmin4.py"]
+
 VOLUME /pgadmin/
